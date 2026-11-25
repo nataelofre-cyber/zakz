@@ -1,0 +1,50 @@
+const openBtn = document.getElementById("openBtn");
+const letter = document.getElementById("letter");
+const surpriseBtn = document.getElementById("surpriseBtn");
+const surprise = document.getElementById("surprise");
+const toast = document.getElementById("toast");
+
+openBtn.addEventListener("click", () => {
+  letter.classList.remove("hidden");
+  openBtn.textContent = "Surat berhasil dibuka! 💗";
+  openBtn.disabled = true;
+  letter.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  confetti();
+});
+
+surpriseBtn.addEventListener("click", () => {
+  surprise.classList.remove("hidden");
+  surpriseBtn.textContent = "Waduh ketahuan 😂";
+  toast.classList.remove("hidden");
+  setTimeout(() => toast.classList.add("hidden"), 2600);
+  confetti();
+});
+
+function confetti() {
+  const emojis = ["💗", "✨", "🎉", "🌸", "😂"];
+
+  for (let i = 0; i < 22; i++) {
+    const bit = document.createElement("span");
+    bit.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+    bit.style.cssText = `
+      position: fixed;
+      left: ${Math.random() * 100}vw;
+      top: -30px;
+      font-size: 24px;
+      z-index: 10;
+      pointer-events: none;
+      transition: transform 1.8s ease, opacity 1.8s ease;
+    `;
+
+    document.body.appendChild(bit);
+
+    requestAnimationFrame(() => {
+      bit.style.transform =
+        `translate(${(Math.random() - 0.5) * 130}px, ${window.innerHeight + 80}px) rotate(360deg)`;
+      bit.style.opacity = "0";
+    });
+
+    setTimeout(() => bit.remove(), 1900);
+  }
+}
